@@ -1,6 +1,10 @@
 <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
 <div *ngIf="userMe">
+
+  <button (click)="logout()">Logout</button>
+
+  
   <h1>Welcome, {{ userMe?.firstName }} {{ userMe?.lastName }} ({{ userMe?.login }})</h1>
 
   <h2>Your Boards</h2>

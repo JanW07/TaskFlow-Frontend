@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService, UserMe } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ export class DashboardComponent implements OnInit {
   userMe?: UserMe;
   errorMessage: string = '';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.userService.getUserMe().subscribe({
@@ -23,5 +24,10 @@ export class DashboardComponent implements OnInit {
         this.errorMessage = 'Failed to load user data.';
       }
     });
+  }
+
+  logout(): void {
+    localStorage.removeItem('jwtToken');
+    this.router.navigate(['/login']);
   }
 }
