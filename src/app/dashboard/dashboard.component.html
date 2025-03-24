@@ -1,0 +1,30 @@
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<div *ngIf="userMe">
+  <h1>Welcome, {{ userMe?.firstName }} {{ userMe?.lastName }} ({{ userMe?.login }})</h1>
+
+  <h2>Your Boards</h2>
+  <div *ngIf="userMe?.boards && userMe.boards.length > 0; else noBoards">
+    <div *ngFor="let board of userMe.boards" class="board">
+      <h3>{{ board.name }}</h3>
+      <p>{{ board.description }}</p>
+
+      <h4>Tasks:</h4>
+      <div *ngIf="board.tasks && board.tasks.length > 0; else noTasks">
+        <ul>
+          <li *ngFor="let task of board.tasks">
+            <strong>{{ task.name }}</strong>: {{ task.description }}
+            <br />
+            <em>Users:</em> {{ task.users.join(', ') }}
+          </li>
+        </ul>
+      </div>
+      <ng-template #noTasks>
+        <p>No tasks available</p>
+      </ng-template>
+    </div>
+  </div>
+  <ng-template #noBoards>
+    <p>You have no boards.</p>
+  </ng-template>
+</div>
