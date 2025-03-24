@@ -1,0 +1,20 @@
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<div *ngIf="board">
+  <h1>{{ board.name }}</h1>
+  <p>{{ board.description }}</p>
+  
+  <h2>Tasks</h2>
+  <div *ngIf="board.tasks && board.tasks.length > 0; else noTasks">
+    <ul>
+      <li *ngFor="let task of board.tasks">
+        {{ task }}
+      </li>
+    </ul>
+  </div>
+  <ng-template #noTasks>
+    <p>No tasks available</p>
+  </ng-template>
+  
+  <button (click)="goBack()">Back</button>
+</div>

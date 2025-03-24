@@ -2,30 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Task {
-  id: number;
-  name: string;
-  description: string;
-  users: string[];
-  board: string;
-}
-
-export interface Board {
-  id: number;
-  name: string;
-  description: string;
-  tasks: Task[];
-  users: string[];
-}
-
-export interface UserMe {
-  id: number;
-  login: string;
-  firstName: string;
-  lastName: string;
-  boards: Board[];
-}
+import { UserMe } from './models/user-me';
 
 @Injectable({
   providedIn: 'root'
