@@ -1,0 +1,34 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Task } from './models/task';
+
+export interface CreateTaskDTO {
+  name: string;
+  description: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TaskService {
+  private apiUrl = 'http://localhost:8080';
+
+  constructor(private http: HttpClient) {}
+
+  getTasks(boardId: number): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}/board/${boardId}/task`);
+  }
+
+  createTask(boardId: number, task: CreateTaskDTO): Observable<Task> {
+    return this.http.post<Task>(`${this.apiUrl}/board/${boardId}/task`, task);
+  }
+
+  deleteTask(boardId: number, id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/board/${boardId}/task/${id}`);
+  }
+
+  updateTask(boardId: number, id: number, task: CreateTaskDTO): Observable<Task> {
+    return this.http.patch<Task>(`${this.apiUrl}/board/${boardId}/task/${id}`, task);
+  }
+}

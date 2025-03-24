@@ -1,20 +1,53 @@
+<!-- src/app/board-view/board-view.component.html -->
 <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
 <div *ngIf="board">
   <h1>{{ board.name }}</h1>
   <p>{{ board.description }}</p>
-  
+
+  <!-- Create Task Section -->
+  <button (click)="toggleTaskForm()">
+    {{ showTaskForm ? 'Cancel' : 'Create Task' }}
+  </button>
+
+  <div *ngIf="showTaskForm">
+    <form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+      <label for="taskName">Task Name:</label>
+      <input id="taskName" formControlName="name" type="text" />
+
+      <label for="taskDescription">Description:</label>
+      <input id="taskDescription" formControlName="description" type="text" />
+
+      <button type="submit" [disabled]="taskForm.invalid">Submit</button>
+    </form>
+  </div>
+
   <h2>Tasks</h2>
-  <div *ngIf="board.tasks && board.tasks.length > 0; else noTasks">
+  <div *ngIf="tasks && tasks.length > 0; else noTasks">
     <ul>
-      <li *ngFor="let task of board.tasks">
-        {{ task }}
+      <li *ngFor="let task of tasks">
+        <!-- If this task is being edited, show the edit form -->
+        <div *ngIf="editTaskId === task.id; else taskDisplay">
+          <form [formGroup]="editTaskForm" (ngSubmit)="onUpdateTask()">
+            <label for="editTaskName">Name:</label>
+            <input id="editTaskName" formControlName="name" type="text" />
+            <label for="editTaskDescription">Description:</label>
+            <input id="editTaskDescription" formControlName="description" type="text" />
+            <button type="submit" [disabled]="editTaskForm.invalid">Save</button>
+            <button type="button" (click)="onCancelEditTask()">Cancel</button>
+          </form>
+        </div>
+        <ng-template #taskDisplay>
+          <strong>{{ task.name }}</strong>: {{ task.description }}
+          <button (click)="onStartEditTask(task)">Edit Task</button>
+          <button (click)="onDeleteTask(task)">Delete Task</button>
+        </ng-template>
       </li>
     </ul>
   </div>
   <ng-template #noTasks>
     <p>No tasks available</p>
   </ng-template>
-  
+
   <button (click)="goBack()">Back</button>
 </div>
