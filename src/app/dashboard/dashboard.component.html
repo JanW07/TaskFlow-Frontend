@@ -4,7 +4,7 @@
 <button (click)="logout()">Logout</button>
 
 <div *ngIf="userMe">
-  <h1>Welcome, {{ userMe?.firstName }} {{ userMe?.lastName }} ({{ userMe?.login }})</h1>
+  <h1>Welcome, {{ userMe?.firstName }} {{ userMe?.lastName }} ({{ userMe?.email }})</h1>
   
   <!-- Create Board Section -->
   <button (click)="toggleBoardForm()">
