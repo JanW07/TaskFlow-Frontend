@@ -1,6 +1,20 @@
 div.boardButtons{
     display: flex;
+    flex-direction: column;
     margin-top: 5px;
+}
+.top-row {
+    width: 100%;
+}
+.top-row button {
+    width: 100%;
+}
+.bottom-row {
+    display: flex;
+    gap: 0.5rem;
+}
+.bottom-row button {
+    flex: 1;
 }
 div.boardButtons button{
     border: none;
@@ -26,30 +40,29 @@ div.boardButtons button:focus{
     outline: none;
     background-color: var(--text-color);
 }
-.button-text {
-    display: inline-block;
-    line-height: 240px;
-  }
-
 .divider{
     width:5px;
     height:auto;
     display:inline-block;
 }
 
-
 .board-button-container {
     position: relative;
     display: inline-block;
   }
   
-  .board-button {
+.board-button {
     border: none;
     background: transparent;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+  .top-row {
+    width: 100%;
   }
   
-  .board-description {
+.board-description {
     display: none;
     position: absolute;
     bottom: 110%; /* positions the cloud above the button; adjust as needed */
@@ -68,16 +81,25 @@ div.boardButtons button:focus{
     z-index: 10;
   }
   
-  .board-button-container:hover .board-description {
+.board-button-container:hover .board-description {
     display: block;
   }
 
-  @media (max-width: 600px) {
-  .board-description {
+@media (max-width: 600px) {
+.board-description {
     min-width: 150px;  /* Lower minimum width */
     max-width: 80vw;   /* Lower maximum width relative to viewport */
     padding: 0.4em 0.8em;
     font-size: 0.85rem; /* Optionally adjust font size */
   }
 }
+
+.board {
+    border: 2px solid var(--accent-color); /* Outline color; adjust thickness if needed */
+    border-radius: 10px;                    /* Rounded corners */
+    padding: 10px;                          /* Space between border and content */
+    margin-bottom: 1rem;                    /* Space between boards */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);    /* Optional subtle shadow for depth */
+  }
+  
   
