@@ -34,7 +34,7 @@
 
     <h2>Your Boards</h2>
 
-    <div *ngIf="userMe?.boards && userMe.boards.length > 0; else noBoards">
+    <div class="boards-container" *ngIf="userMe?.boards && userMe.boards.length > 0; else noBoards">
       <div *ngFor="let board of userMe.boards" class="board"> 
         <div class="boardButtons">
           <!-- Top row: Wide Open Board Button -->
@@ -78,10 +78,17 @@
         <!-- Edit Form: visible only if this board is in edit mode -->
         <div *ngIf="editBoardId === board.id">
           <form [formGroup]="editBoardForm" (ngSubmit)="onUpdateBoard()">
-            <label for="editName">Name:</label>
-            <input id="editName" formControlName="name" type="text" />
-            <label for="editDescription">Description:</label>
-            <input id="editDescription" formControlName="description" type="text" />
+            <div>
+              <label for="boardName">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M560-440h200v-80H560v80Zm0-120h200v-80H560v80ZM200-320h320v-22q0-45-44-71.5T360-440q-72 0-116 26.5T200-342v22Zm160-160q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z"/></svg>      </label>
+              <input required type="text" formControlName="name" id="name" placeholder="Board Name"/>
+            </div>
+            <div>
+              <label for="boardDescription">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>
+              </label>
+              <input type="text" formControlName="description" id="description" placeholder="Board Description"/>
+            </div>
             <button type="submit" [disabled]="editBoardForm.invalid">Save</button>
             <button type="button" (click)="editBoardId = null; editBoardForm.reset()">Cancel</button>
           </form>

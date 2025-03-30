@@ -19,7 +19,7 @@ div.boardButtons{
 div.boardButtons button{
     border: none;
     border-radius: 10px;
-    padding: .35em .75em;
+    padding: .35em 3em;
     background-color: var(--accent-color);
     color: var(--base-color);
     font: inherit;
@@ -93,6 +93,12 @@ div.boardButtons button:focus{
     font-size: 0.85rem; /* Optionally adjust font size */
   }
 }
+
+.boards-container {
+    max-height: calc(100vh - 150px); /* Adjust offset as needed */
+    overflow-y: auto;
+    padding: 1rem; 
+  }
 
 .board {
     border: 2px solid var(--accent-color); /* Outline color; adjust thickness if needed */
