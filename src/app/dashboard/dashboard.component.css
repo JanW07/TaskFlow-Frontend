@@ -5,7 +5,7 @@ div.boardButtons{
 div.boardButtons button{
     border: none;
     border-radius: 10px;
-    padding: .35em .5em;
+    padding: .35em .75em;
     background-color: var(--accent-color);
     color: var(--base-color);
     font: inherit;
@@ -26,6 +26,10 @@ div.boardButtons button:focus{
     outline: none;
     background-color: var(--text-color);
 }
+.button-text {
+    display: inline-block;
+    line-height: 240px;
+  }
 
 .divider{
     width:5px;
@@ -55,30 +59,25 @@ div.boardButtons button:focus{
     color: var(--base-color);
     padding: 0.4em .75em;
     border-radius: 10px;
-    white-space: nowrap;
+    white-space: normal;      /* Allow text to wrap */
+    min-width: 200px;
+    max-width: 90vw;          /* Prevent overflowing the viewport */
+    word-wrap: break-word;    /* Break long words if needed */
     font-size: 0.85em;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     z-index: 10;
   }
   
-  /* Show description on hover when not sticky */
   .board-button-container:hover .board-description {
     display: block;
   }
-  
-  /* Always show when sticky is true */
-  .board-description.sticky {
-    display: block;
+
+  @media (max-width: 600px) {
+  .board-description {
+    min-width: 150px;  /* Lower minimum width */
+    max-width: 80vw;   /* Lower maximum width relative to viewport */
+    padding: 0.4em 0.8em;
+    font-size: 0.85rem; /* Optionally adjust font size */
   }
-  
-  /* Style the little "X" button */
-  .board-description .close {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    color: var(--base-color);
-  }
-  
+}
   

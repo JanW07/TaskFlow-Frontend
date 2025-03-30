@@ -162,3 +162,11 @@ button:focus{
     outline: none;
     background-color: var(--text-color);
 }
+
+.logout-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
