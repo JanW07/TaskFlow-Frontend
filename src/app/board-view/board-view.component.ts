@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Board } from '../models/board';
 import { Task } from '../models/task';
+import { NavigationService } from '../navigation.service';
+
 
 @Component({
   selector: 'app-board-view',
@@ -35,7 +37,8 @@ export class BoardViewComponent implements OnInit {
     private boardService: BoardService,
     private taskService: TaskService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private navigationService: NavigationService
   ) {
     this.taskForm = this.fb.group({
       name: ['', Validators.required],
@@ -149,6 +152,6 @@ export class BoardViewComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/dashboard']);
+    this.navigationService.goBack('/dashboard');
   }
 }
