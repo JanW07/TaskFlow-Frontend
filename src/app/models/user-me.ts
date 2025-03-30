@@ -2,7 +2,7 @@ import { Board } from './board';
 
 export interface UserMe {
   id: number;
-  login: string;
+  email: string;
   firstName: string;
   lastName: string;
   boards: Board[];

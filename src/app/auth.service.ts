@@ -2,12 +2,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { LoginResponse } from './models/login-response';
+import { UserMe } from './models/user-me';
+import { Router } from '@angular/router';
 
-export interface LoginResponse {
-  token: string;
-  sig: string;
-  login: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +13,24 @@ export interface LoginResponse {
 export class AuthService {
   private apiUrl = 'http://localhost:8080'; // Adjust as needed
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  login(credentials: { login: string; password: string }): Observable<LoginResponse> {
+  logout(): void {
+    localStorage.removeItem('jwtToken');
+    this.router.navigate(['/login']);
+  }
+
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('jwtToken');
+    // Optionally, you could validate the token here. //todo
+    return !!token;
+  }
+
+  login(credentials: { email: string; password: string }): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials);
+  }
+
+  register(userData: { email: string; password: string; firstName: string; lastName: string }): Observable<UserMe> {
+    return this.http.post<UserMe>(`${this.apiUrl}/auth/register`, userData);
   }
 }

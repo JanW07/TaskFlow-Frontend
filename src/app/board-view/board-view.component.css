@@ -1,0 +1,137 @@
+:root {
+    --base-color: #EDE7F6;   /* A very light, subtle lavender */
+    --accent-color: #5E35B1; /* A deep, muted purple for accents */
+    --input-color:  #7E57C2;  /* A balanced medium purple for inputs */
+    --text-color:   #311B92; /* A rich, dark purple for text */
+    --incorrect-field-color: #8E244D;
+  }
+
+.board-view-container{
+    overflow-y: auto;
+    max-height: 100vh;
+    justify-content: flex-start;
+    padding: 1rem;
+    background-color: rgba(237, 204, 234, 0.5); /* light overlay tint */
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+.task-cards-container{
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    display: flex;
+    border: 1px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 2rem;
+    flex-direction: column;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.task-card{
+    background-color: var(--base-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.task-details{
+    flex: 1;
+    margin-right: 0.5rem;
+    text-align: left;
+}
+.task-actions{
+    display: flex;
+    justify-content: flex-end;
+}
+.task-actions button{
+    border: none;
+    padding: .5rem 1rem;
+    display: flex;
+}
+.create-button {
+    border: none;
+    padding: 1em 2rem;
+    display: flex;
+    align-items: center;
+}
+.create-button-container{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+}
+
+.board-button-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+.board-button {
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  .top-row {
+    width: 100%;
+  }
+  
+.board-description {
+    display: none;
+    position: absolute;
+    top: 110%; /* positions the cloud above the button; adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent-color);
+    color: var(--base-color);
+    padding: 0.4em .75em;
+    border-radius: 10px;
+    white-space: normal;      /* Allow text to wrap */
+    min-width: 200px;
+    max-width: 90vw;          /* Prevent overflowing the viewport */
+    word-wrap: break-word;    /* Break long words if needed */
+    font-size: 0.85em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+.board-button-container:hover .board-description {
+    display: block;
+  }
+
+@media (max-width: 600px) {
+.board-description {
+    min-width: 150px;  /* Lower minimum width */
+    max-width: 80vw;   /* Lower maximum width relative to viewport */
+    padding: 0.4em 0.8em;
+    font-size: 0.85rem; /* Optionally adjust font size */
+  }
+.task-cards-container {
+    max-height: calc(100vh - 200px); /* Adjust the offset for headers/forms on small screens */
+  }
+}
+
+.task-form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.task-form-container form{
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+    border: 1px solid var(--accent-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+

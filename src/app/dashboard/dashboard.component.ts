@@ -134,9 +134,4 @@ export class DashboardComponent implements OnInit {
   openBoard(boardId: number): void {
     this.router.navigate(['/board-view', boardId]);
   }
-
-  logout(): void {
-    localStorage.removeItem('jwtToken');
-    this.router.navigate(['/login']);
-  }
 }
