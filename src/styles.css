@@ -41,6 +41,11 @@ h1{
     font-weight: 900;
     text-transform: uppercase;
 }
+h2{
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
 form{
     width: min(400px, 100%);
     margin-top: 20px;
@@ -136,4 +141,24 @@ form div.incorrect input {
 }
 #error-message{
     color: var(--incorrect-field-color);
+}
+button{
+    margin-top: 10px;
+    border: none;
+    border-radius: 1000px;
+    padding: .85em 4em;
+    background-color: var(--accent-color);
+    color: var(--base-color);
+    font: inherit;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 150ms ease;
+}
+button:hover{
+    background-color: var(--text-color);
+}
+button:focus{
+    outline: none;
+    background-color: var(--text-color);
 }

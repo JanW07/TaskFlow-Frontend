@@ -1,0 +1,84 @@
+div.boardButtons{
+    display: flex;
+    margin-top: 5px;
+}
+div.boardButtons button{
+    border: none;
+    border-radius: 10px;
+    padding: .35em .5em;
+    background-color: var(--accent-color);
+    color: var(--base-color);
+    font: inherit;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 150ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+div.boardButtons button:hover{
+    background-color: var(--text-color);
+}
+div.boardButtons button:focus{
+    outline: none;
+    background-color: var(--text-color);
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+
+
+.board-button-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .board-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  .board-description {
+    display: none;
+    position: absolute;
+    bottom: 110%; /* positions the cloud above the button; adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent-color);
+    color: var(--base-color);
+    padding: 0.4em .75em;
+    border-radius: 10px;
+    white-space: nowrap;
+    font-size: 0.85em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+  /* Show description on hover when not sticky */
+  .board-button-container:hover .board-description {
+    display: block;
+  }
+  
+  /* Always show when sticky is true */
+  .board-description.sticky {
+    display: block;
+  }
+  
+  /* Style the little "X" button */
+  .board-description .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--base-color);
+  }
+  
+  
