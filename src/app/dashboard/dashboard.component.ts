@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user/user.service';
 import { Router } from '@angular/router';
-import { BoardService, CreateBoardDTO } from '../board.service';
+import { BoardService, CreateBoardDTO } from '../services/board/board.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserMe } from '../models/user-me';
 import { Board } from '../models/board';
-import { Task } from '../models/task';
 
 @Component({
   selector: 'app-dashboard',

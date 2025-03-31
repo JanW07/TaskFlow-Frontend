@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BoardService } from '../board.service';
-import { TaskService, CreateTaskDTO } from '../task.service';
-import { BoardStageService } from '../board-stage.service';
+import { BoardService } from '../services/board/board.service';
+import { TaskService, CreateTaskDTO } from '../services/task/task.service';
+import { BoardStageService } from '../services/board-stage/board-stage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Board } from '../models/board';
 import { Task } from '../models/task';
 import { NavigationService } from '../services/navigation/navigation.service';
-import { BoardStageTaskService } from '../board-stage-task.service';
+import { BoardStageTaskService } from '../services/board-stage-task/board-stage-task.service';
 
 
 @Component({
