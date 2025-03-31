@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Board } from '../models/board';
 import { Task } from '../models/task';
-import { NavigationService } from '../navigation.service';
+import { NavigationService } from '../services/navigation/navigation.service';
 import { BoardStageTaskService } from '../board-stage-task.service';
 
 

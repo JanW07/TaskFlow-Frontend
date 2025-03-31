@@ -1,7 +1,11 @@
 <div class="board-view-container" *ngIf="board">
-  <!-- Board Name -->
+  <!-- ========================== -->
+  <!--          HEADER           -->
+  <!-- ========================== -->
   <h1>{{ board.name }}</h1>
-  <!-- Board Description -->
+
+
+  <!-- Board Description + Open Button -->
   <div class="board-button-container">
     <!-- Open Board Button -->
     <button class="board-button">
@@ -9,25 +13,35 @@
         <path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
       </svg>
     </button>
+    <!-- Description Text -->
     <div class="board-description">
       {{ board.description }}
     </div>
   </div>
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-  <!-- Create Task Section -->
+  <!-- ========================== -->
+  <!--      TASK CREATION        -->
+  <!-- ========================== -->
+
+  <!-- Task Form -->
   <div class="task-form-container" *ngIf="showTaskForm">
     <form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+      <!-- Task Name Input -->
       <div class="input-group">
         <label for="taskName">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M560-440h200v-80H560v80Zm0-120h200v-80H560v80ZM200-320h320v-22q0-45-44-71.5T360-440q-72 0-116 26.5T200-342v22Zm160-160q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z"/></svg>      </label>
         <input required type="text" formControlName="name" id="taskName" placeholder="Task Name"/>
       </div>
+
+      <!-- Task Description Input -->
       <div class="input-group">
         <label for="taskDescription">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M560-440h200v-80H560v80Zm0-120h200v-80H560v80ZM200-320h320v-22q0-45-44-71.5T360-440q-72 0-116 26.5T200-342v22Zm160-160q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z"/></svg>      </label>
         <input required type="text" formControlName="description" id="taskDescription" placeholder="Task Name"/>
       </div>
+
+      <!-- Submit / Cancel Buttons -->
       <div class="button-group">
         <button type="submit" [disabled]="taskForm.invalid">Submit</button>
         <button type="submit" (click)="toggleTaskForm()">Cancel</button>
@@ -37,31 +51,53 @@
 
   <div class="divider"></div>
 
+  <!-- ========================== -->
+  <!--       BOARD STAGES        -->
+  <!-- ========================== -->
   <h2>Board Stages</h2>
+
+
+  <!-- Create Button (if form hidden) -->
   <div class="create-button-container" *ngIf="!showTaskForm">
     <button class="create-button" (click)="toggleTaskForm()">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
     </button>
   </div>
+
+  <!-- Stages Display -->
   <div *ngIf="board.boardStages && board.boardStages.length > 0; else noStages">
     <div class="board-stages-container">
+
+      <!-- Loop through all stages -->
       <div class="board-stage" *ngFor="let stage of board.boardStages">
         <h3>{{stage.name}}</h3>
+
+        <!-- Stage Task Cards -->
         <div class="task-cards-container">
+
+          <!-- Loop through all tasks in a stage -->
           <div class="task-card" *ngFor="let task of stage.tasks">
+
+            <!-- Edit Mode -->
             <ng-container *ngIf="editTaskId == task.id; else taskDisplay">
               <div class="task-form-container">
                 <form [formGroup]="editTaskForm" (ngSubmit)="onUpdateTask()">
+
+                  <!-- Task Name -->
                   <div class="input-group">
                     <label for="editTaskName">
                       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M560-440h200v-80H560v80Zm0-120h200v-80H560v80ZM200-320h320v-22q0-45-44-71.5T360-440q-72 0-116 26.5T200-342v22Zm160-160q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z"/></svg>      </label>
                     <input required type="text" formControlName="name" id="editTaskName" placeholder="Task Name"/>
                   </div>
+
+                  <!-- Task Description -->
                   <div class="input-group">
                     <label for="editTaskDescription">
                       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M560-440h200v-80H560v80Zm0-120h200v-80H560v80ZM200-320h320v-22q0-45-44-71.5T360-440q-72 0-116 26.5T200-342v22Zm160-160q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z"/></svg>      </label>
                     <input required type="text" formControlName="description" id="editTaskDescription" placeholder="Task Name"/>
                   </div>
+
+                  <!-- Buttons -->
                   <div class="button-group">
                     <button type="submit" [disabled]="editTaskForm.invalid">Save</button>
                     <button type="button" (click)="onCancelEditTask()">Cancel</button>
@@ -69,28 +105,47 @@
                 </form>
               </div>
             </ng-container> 
+
+            <!-- Display Mode -->
             <ng-template #taskDisplay>
+
+
+              <!-- Task details -->
               <div class="task-details">
                 <strong>{{ task.name }}</strong>: {{ task.description }}
               </div>
+
+              <!-- Task Actions -->
               <div class="task-actions">
+                <!-- Edit Button -->
                 <button *ngIf="editTaskId !== task.id" (click)="onStartEditTask(task)">
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
                 </button>
+
+                <!-- Delete Button -->
                 <button *ngIf="editTaskId !== task.id" (click)="onDeleteTask(task)">
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                 </button>
               </div>
             </ng-template>
           </div>
-            <!-- End of task-cards-container -->
+          <!-- End of task-cards-container -->
         </div>
       </div>
+      <!-- End of one board-stage -->
     </div>
+    <!-- End of board-stages-container -->
   </div>
+
+  <!-- If No Stages Exist -->
   <ng-template #noStages>
     <p>No stages available</p>
   </ng-template>
+
+
+<!-- ========================== -->
+<!--        BACK BUTTON         -->
+<!-- ========================== -->
 <div class="back-container">
   <button (click)="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"/></svg>
