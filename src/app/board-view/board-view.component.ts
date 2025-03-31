@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BoardService } from '../board.service';
 import { TaskService, CreateTaskDTO } from '../task.service';
+import { BoardStageService } from '../board-stage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Board } from '../models/board';
 import { Task } from '../models/task';
 import { NavigationService } from '../navigation.service';
+import { BoardStageTaskService } from '../board-stage-task.service';
 
 
 @Component({
@@ -36,6 +38,8 @@ export class BoardViewComponent implements OnInit {
     private route: ActivatedRoute,
     private boardService: BoardService,
     private taskService: TaskService,
+    private stageService: BoardStageService,
+    private boardStageTaskService: BoardStageTaskService,
     private router: Router,
     private fb: FormBuilder,
     private navigationService: NavigationService
@@ -55,6 +59,20 @@ export class BoardViewComponent implements OnInit {
     this.boardService.getBoard(boardId).subscribe({
       next: (data: Board) => {
         this.board = data;
+        this.stageService.getStages(boardId).subscribe({
+          next: (stages) => {
+            if(this.board){
+              this.board.boardStages = stages;
+              stages.forEach(stage => {
+                this.loadTasksOnStage(stage.stageNumber);
+              });
+            }
+          },
+          error: (err) => {
+            console.error('Failed to load stages', err);
+            this.errorMessage = 'Failed to load board stages.';
+          }
+        });
         this.loadTasks(boardId);
       },
       error: (err) => {
@@ -76,6 +94,24 @@ export class BoardViewComponent implements OnInit {
     });
   }
 
+  loadTasksOnStage(stageNumber: number): void {
+    if (!this.board) {
+      return;
+    }
+    this.boardStageTaskService.getTasksOnStage(this.board.id, stageNumber).subscribe({
+      next: (tasks: Task[]) => {
+        const stage = this.board?.boardStages?.find(s => s.stageNumber === stageNumber);
+        if (stage) {
+          stage.tasks = tasks;
+        }
+      },
+      error: (err) => {
+        console.error(`Failed to load tasks for stage ${stageNumber}`, err);
+        this.errorMessage = `Failed to load tasks for stage ${stageNumber}.`;
+      }
+    });
+  }
+
   toggleTaskForm(): void {
     this.showTaskForm = !this.showTaskForm;
   }
@@ -87,10 +123,12 @@ export class BoardViewComponent implements OnInit {
         next: (createdTask: Task) => {
           console.log('Task created:', createdTask);
           // Ensure tasks array is defined and then push new task
-          if (!this.tasks) {
-            this.tasks = [];
+          const defaultStage = this.board?.boardStages?.find(
+            stage => stage.stageNumber === 1
+          );
+          if(defaultStage){
+            defaultStage.tasks.push(createdTask);
           }
-          this.tasks.push(createdTask);
           this.showTaskForm = false;
           this.taskForm.reset();
         },
