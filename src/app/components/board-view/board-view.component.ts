@@ -275,12 +275,26 @@ export class BoardViewComponent implements OnInit {
   onOpenTaskPanel(task: Task): void {
     this.selectedTask = task;
     this.showTaskPanel = true;
+    document.body.style.overflow = 'hidden';
   }
   
   onClosePanel(): void {
     this.selectedTask = null;
     this.showTaskPanel = false;
+    document.body.style.overflow = '';
   }
+
+  onTaskUpdate(updatedTask: Task): void {
+    const stage = this.board?.boardStages?.find(s =>
+      s.tasks.some(t => t.id === updatedTask.id)
+    );
+  
+    if (stage) {
+      const taskIndex = stage.tasks.findIndex(t => t.id === updatedTask.id);
+      stage.tasks[taskIndex] = updatedTask;
+    }
+  }
+  
   
 
   goBack(): void {

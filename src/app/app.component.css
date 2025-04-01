@@ -1,8 +1,7 @@
 .logout-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     padding: 1em 2em;
     display: flex;
   }

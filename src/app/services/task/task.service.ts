@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task } from '../../models/task';
+import { environment } from '../../../environments/environment';
 
 export interface CreateTaskDTO {
   name: string;
@@ -12,7 +13,7 @@ export interface CreateTaskDTO {
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

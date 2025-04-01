@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Board } from '../../models/board';
+import { environment } from '../../../environments/environment';
+
 
 export interface CreateBoardDTO {
   name: string;
@@ -12,7 +14,7 @@ export interface CreateBoardDTO {
   providedIn: 'root'
 })
 export class BoardService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

@@ -1,9 +1,20 @@
 <div class="task-details-panel" [class.show]="showPanel">
-    <button class="close-btn" (click)="close()">X</button>
-    <div class="task-info">
-      <h2>{{ task?.name }}</h2>
-      <p>{{ task?.description }}</p>
-      <!-- add more task details here -->
+    
+    <div class="header">
+        <!-- Close Button -->
+        <div class="close-btn">
+            <button (click)="close()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            </button>
+        </div>
+        <!-- Name -->
+        <h1>{{task.name}}</h1>
     </div>
-  </div>
+    <div class="header-divider"></div>
+    <div class="details">
+        <h3 class="description-label">Description</h3>
+        <p class="task-description">{{ task.description || 'No description provided.' }}</p>
+        <!-- later -->
+    </div>
+</div>
   
