@@ -1,0 +1,28 @@
+.task-details-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50vw;           /* Takes up half the viewport width */
+    height: 100vh;         /* Full viewport height */
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    transform: translateX(100%);  /* Initially off-screen to the right */
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 1rem;
+  }
+  
+  .task-details-panel.show {
+    transform: translateX(0);  /* Slide into view */
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  

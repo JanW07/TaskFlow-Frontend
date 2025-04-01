@@ -11,12 +11,12 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 import { BoardStageTaskService } from '../../services/board-stage-task/board-stage-task.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-
+import { TaskDetailsPanelComponent } from '../task-details-panel/task-details-panel.component';
 
 @Component({
   selector: 'app-board-view',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DragDropModule],
+  imports: [CommonModule, ReactiveFormsModule, DragDropModule, TaskDetailsPanelComponent],
   templateUrl: './board-view.component.html',
   styleUrls: ['./board-view.component.css']
 })
@@ -27,7 +27,8 @@ export class BoardViewComponent implements OnInit {
 
   // For task list and inline task details
   tasks: Task[] = [];
-  selectedTask?: Task | null;
+  selectedTask: Task | null = null;
+  showTaskPanel: boolean = false;
 
   // For task creation
   showTaskForm: boolean = false;
@@ -271,6 +272,15 @@ export class BoardViewComponent implements OnInit {
     }
   }
   
+  onOpenTaskPanel(task: Task): void {
+    this.selectedTask = task;
+    this.showTaskPanel = true;
+  }
+  
+  onClosePanel(): void {
+    this.selectedTask = null;
+    this.showTaskPanel = false;
+  }
   
 
   goBack(): void {

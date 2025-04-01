@@ -1,0 +1,9 @@
+<div class="task-details-panel" [class.show]="showPanel">
+    <button class="close-btn" (click)="close()">X</button>
+    <div class="task-info">
+      <h2>{{ task?.name }}</h2>
+      <p>{{ task?.description }}</p>
+      <!-- add more task details here -->
+    </div>
+  </div>
+  
