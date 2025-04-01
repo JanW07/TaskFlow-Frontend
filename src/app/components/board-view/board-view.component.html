@@ -73,10 +73,15 @@
         <h3>{{stage.name}}</h3>
 
         <!-- Stage Task Cards -->
-        <div class="task-cards-container">
+        <div class="task-cards-container"
+        cdkDropList
+        [id]="'stage:'+stage.stageNumber"
+        [cdkDropListData]="stage.tasks"
+        [cdkDropListConnectedTo]="dropListIds"
+        (cdkDropListDropped)="onTaskDropped($event, stage.stageNumber)">
 
           <!-- Loop through all tasks in a stage -->
-          <div class="task-card" *ngFor="let task of stage.tasks">
+          <div class="task-card" *ngFor="let task of stage.tasks" cdkDrag>
 
             <!-- Edit Mode -->
             <ng-container *ngIf="editTaskId == task.id; else taskDisplay">

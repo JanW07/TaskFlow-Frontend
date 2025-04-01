@@ -9,18 +9,21 @@ import { Board } from '../../models/board';
 import { Task } from '../../models/task';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { BoardStageTaskService } from '../../services/board-stage-task/board-stage-task.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 
 @Component({
   selector: 'app-board-view',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DragDropModule],
   templateUrl: './board-view.component.html',
   styleUrls: ['./board-view.component.css']
 })
 export class BoardViewComponent implements OnInit {
   board?: Board;
   errorMessage: string = '';
+  dropListIds: string[] = [];
 
   // For task list and inline task details
   tasks: Task[] = [];
@@ -63,6 +66,7 @@ export class BoardViewComponent implements OnInit {
           next: (stages) => {
             if(this.board){
               this.board.boardStages = stages;
+              this.dropListIds = this.board.boardStages.map(stage => 'stage:' + stage.stageNumber);
               stages.forEach(stage => {
                 this.loadTasksOnStage(stage.stageNumber);
               });
@@ -187,6 +191,57 @@ export class BoardViewComponent implements OnInit {
   onCancelEditTask(): void {
     this.editTaskId = null;
     this.editTaskForm.reset();
+  }
+
+  onMoveTask(task: Task, newStageNumber: number): void {
+    if (this.board) {
+      this.boardStageTaskService.changeTaskStage(this.board.id, task.id, newStageNumber).subscribe({
+        next: (movedTask: Task) => {
+          // Remove task from its old stage's list
+          const oldStageNumber = task.boardStage?.stageNumber;
+          if (oldStageNumber !== undefined && this.board?.boardStages) {
+            const oldStage = this.board.boardStages.find(s => s.stageNumber === oldStageNumber);
+            if (oldStage) {
+              oldStage.tasks = oldStage.tasks.filter(t => t.id !== task.id);
+            }
+          }
+          // Add task to new stage's list
+          const newStage = this.board?.boardStages?.find(s => s.stageNumber === newStageNumber);
+          if (newStage) {
+            newStage.tasks.push(movedTask);
+          }
+        },
+        error: (err) => {
+          console.error('Failed to move task', err);
+          this.errorMessage = 'Failed to move task.';
+        }
+      });
+    }
+  }
+
+  onTaskDropped(event: CdkDragDrop<Task[]>, newStageNumber: number): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+  
+      const task = event.item.data as Task;
+      this.boardStageTaskService.changeTaskStage(this.board!.id, task.id, newStageNumber).subscribe({
+        next: (updatedTask: Task) => {
+          console.log('Task moved:', updatedTask);
+          // Optionally, refresh tasks for both old and new stages
+        },
+        error: (err) => {
+          console.error('Failed to move task', err);
+          this.errorMessage = 'Failed to move task.';
+        }
+      });
+    }
   }
 
   goBack(): void {
