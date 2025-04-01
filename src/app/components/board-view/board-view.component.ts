@@ -244,6 +244,35 @@ export class BoardViewComponent implements OnInit {
     }
   }
 
+  toggleTaskCompletion(task: Task): void {
+    if (!this.board) {
+      return;
+    }
+    if (task.completed) {
+      this.taskService.unCompleteTask(this.board.id, task.id).subscribe({
+        next: (updatedTask: Task) => {
+          task.completed = updatedTask.completed; // Update local state.
+        },
+        error: (err) => {
+          console.error("Error uncompleting task:", err);
+          this.errorMessage = "Failed to update task completion status.";
+        }
+      });
+    } else {
+      this.taskService.completeTask(this.board.id, task.id).subscribe({
+        next: (updatedTask: Task) => {
+          task.completed = updatedTask.completed; // Update local state.
+        },
+        error: (err) => {
+          console.error("Error completing task:", err);
+          this.errorMessage = "Failed to update task completion status.";
+        }
+      });
+    }
+  }
+  
+  
+
   goBack(): void {
     this.navigationService.goBack('/dashboard');
   }

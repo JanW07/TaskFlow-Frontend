@@ -31,4 +31,11 @@ export class TaskService {
   updateTask(boardId: number, id: number, task: CreateTaskDTO): Observable<Task> {
     return this.http.patch<Task>(`${this.apiUrl}/board/${boardId}/task/${id}`, task);
   }
+
+  completeTask(boardId: number, id: number): Observable<Task> {
+    return this.http.patch<Task>(`${this.apiUrl}/board/${boardId}/task/complete/${id}`, null);
+  }
+  unCompleteTask(boardId: number, id: number): Observable<Task> {
+    return this.http.patch<Task>(`${this.apiUrl}/board/${boardId}/task/undo-complete/${id}`, null);
+  }
 }

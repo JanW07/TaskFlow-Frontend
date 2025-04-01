@@ -6,6 +6,7 @@ export interface Task {
     description: string;
     users: string[];
     board: string;
+    completed: boolean;
     boardStage: BoardStage;
   }
   
