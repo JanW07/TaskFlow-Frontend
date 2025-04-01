@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Board } from './models/board';
+import { Board } from '../../models/board';
 
 export interface CreateBoardDTO {
   name: string;

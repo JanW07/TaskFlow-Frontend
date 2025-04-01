@@ -1,4 +1,5 @@
 import { Task } from './task';
+import { BoardStage } from './board-stage';
 
 export interface Board {
   id: number;
@@ -6,4 +7,5 @@ export interface Board {
   description: string;
   tasks: Task[];
   users: string[];
+  boardStages: BoardStage[];
 }

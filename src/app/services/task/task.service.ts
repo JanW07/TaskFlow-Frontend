@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Task } from './models/task';
+import { Task } from '../../models/task';
 
 export interface CreateTaskDTO {
   name: string;
@@ -30,5 +30,12 @@ export class TaskService {
 
   updateTask(boardId: number, id: number, task: CreateTaskDTO): Observable<Task> {
     return this.http.patch<Task>(`${this.apiUrl}/board/${boardId}/task/${id}`, task);
+  }
+
+  completeTask(boardId: number, id: number): Observable<Task> {
+    return this.http.patch<Task>(`${this.apiUrl}/board/${boardId}/task/complete/${id}`, null);
+  }
+  unCompleteTask(boardId: number, id: number): Observable<Task> {
+    return this.http.patch<Task>(`${this.apiUrl}/board/${boardId}/task/undo-complete/${id}`, null);
   }
 }
