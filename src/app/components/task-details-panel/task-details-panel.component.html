@@ -7,14 +7,43 @@
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
             </button>
         </div>
-        <!-- Name -->
-        <h1>{{task.name}}</h1>
+        <!-- Task Name -->
+        <div class="header-editable-field">
+            <ng-container *ngIf="!isEditingName; else editName">
+              <h1 (click)="enterNameEdit()">{{ task.name }}</h1>
+            </ng-container>
+          
+            <ng-template #editName>
+              <textarea
+                #titleTextarea
+                class="inline-title-textarea"
+                [(ngModel)]="task.name"
+                (input)="autoGrow($event)"
+                (blur)="exitNameEdit()"
+                (keydown.enter)="exitNameEdit()"
+              ></textarea>
+           
+            </ng-template>
+        </div>
+          
     </div>
     <div class="header-divider"></div>
-    <div class="details">
-        <h3 class="description-label">Description</h3>
-        <p class="task-description">{{ task.description || 'No description provided.' }}</p>
-        <!-- later -->
-    </div>
+    <!-- Description -->
+    <div class="description-editable-field">
+      <h3>Description</h3>
+      <div *ngIf="!isEditingDescription; else editDesc" (click)="enterDescriptionEdit()">
+        <p>{{ task.description || 'Click to add description' }}</p>
+      </div>
+    <ng-template #editDesc>
+      <textarea
+        #descTextarea
+        class="inline-textarea"
+        [(ngModel)]="task.description"
+        (input)="autoGrow($event)"
+        (blur)="exitDescriptionEdit()"
+        (keydown.enter)="exitDescriptionEdit()"
+      ></textarea>
+    </ng-template>
+  </div>
 </div>
   
