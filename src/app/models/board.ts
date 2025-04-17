@@ -5,7 +5,7 @@ export interface Board {
   id: number;
   name: string;
   description: string;
-  tasks: Task[];
+  tasks?: Task[];
   users: string[];
   boardStages: BoardStage[];
 }

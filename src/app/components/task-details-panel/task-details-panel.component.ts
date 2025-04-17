@@ -3,7 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { Task } from '../../models/task';
-import { T } from '@angular/cdk/keycodes';
+import { TaskService } from '../../services/task/task.service';
+
 
 @Component({
   selector: 'app-task-details-panel',
@@ -26,7 +27,7 @@ export class TaskDetailsPanelComponent implements OnInit {
 
   editForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.editForm = this.fb.group({
@@ -54,9 +55,11 @@ export class TaskDetailsPanelComponent implements OnInit {
   }
   exitNameEdit() {
     this.isEditingName = false;
+    this.saveTask();
   }
   exitDescriptionEdit() {
     this.isEditingDescription = false;
+    this.saveTask();
   }
   
   autoGrowOnInit(textarea: HTMLTextAreaElement) {
@@ -72,5 +75,17 @@ export class TaskDetailsPanelComponent implements OnInit {
 
   close(): void {
     this.closePanel.emit();
+  }
+
+  private saveTask(){
+    this.taskService
+    .updateTask(this.task.board.id, this.task.id, {
+      name: this.task.name,
+      description: this.task.description
+    })
+    .subscribe({
+      next: updated => this.updateTask.emit(updated),
+      error: err => console.error('Failed to update task', err)
+    });
   }
 }
